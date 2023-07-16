@@ -1,5 +1,7 @@
 # Recovering displacement from distributed acoustic sensing data for seismic applications
 
+[![DOI](https://zenodo.org/badge/667078655.svg)](https://zenodo.org/badge/latestdoi/667078655)
+
 This repository contains the codes to reproduce the figures presented in the following article:
 
 > Trabattoni, A., Biagioli, F., Strumia, C., van den Ende, M., Scotto di Uccio. F., Festa, G., Rivet, D., Sladen, A., Ampuero J. P., Métaxian, J. P., Stutzmann, E. (2023). **Recovering displacement from distributed acoustic sensing data for seismic applications**. *Geophysical Journal International*.
