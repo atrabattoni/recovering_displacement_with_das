@@ -1,0 +1,16 @@
+name: trabattoni2023
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - scipy
+  - xarray
+  - pandas
+  - obspy
+  - matplotlib
+  - cartopy
+  - cmocean
+  - pip
+  - pip:
+    - xdas
+    - fteikpy

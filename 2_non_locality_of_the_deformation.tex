@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage[margin=2.5pc]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shadings}
+\usetikzlibrary{external}
+\tikzexternalize % activate!
+\tikzset{font=\small}
+
+\begin{document}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    
+        %% Background & grid
+        \draw[white] (-3.5,-4) rectangle (6,2.5);
+        \foreach \x in {0,1,2,3,4,5}
+            \draw[dotted,gray] (\x,-4) -- (\x, 2.5);
+
+
+        %% At rest
+        
+        % cable 
+        \path[fill=lightgray] ([yshift=-2pt]0,1.5) rectangle ([yshift=2pt]5,1.5);
+        \foreach \x in {1,2,3,4}
+           \draw ([yshift=2pt]\x,1.5) -- ([yshift=-2pt]\x,1.5);
+        \path[draw=black] ([yshift=-2pt]0,1.5) rectangle ([yshift=2pt]5,1.5);
+
+        % DAS
+        \node[draw,fill=black,text=white,anchor=east,minimum height=0.8cm,minimum width=1.3cm] at (0, 1.5) {DAS};  
+
+        % ruler
+        \draw[orange] (0, 1.1) -- (5, 1.1);
+        \foreach \x in {0,1,2,3,4,5}
+           \draw[orange] (\x,1.1) -- ([yshift=5pt]\x,1.1);
+        \foreach \x in {0,0.1,...,5}
+           \draw[orange] (\x,1.1) -- ([yshift=2pt]\x,1.1);
+
+        % annotations
+        \node at (-2.5, 1.5) {\textbf{(a)}};
+
+
+        %% Deformed at the begining
+
+        % cable
+        \path[fill=lightgray] ([yshift=-2pt]+0.3,0) rectangle ([yshift=2pt]5,0);
+        \path[left color=red, right color=lightgray] ([yshift=-2pt]+0.3,0) rectangle ([yshift=2pt]+0.3+0.7,0);
+        \foreach \x in {1,2,3,4}
+           \draw ([yshift=2pt]\x,0) -- ([yshift=-2pt]\x,0);
+        \path[draw=black] ([yshift=-2pt]+0.3,0) rectangle ([yshift=2pt]5,0);
+
+        % DAS
+        \node[draw,fill=black,text=white,anchor=east,minimum height=0.8cm,minimum width=1.3cm] at (+0.3, 0) {DAS};  
+
+        % ruler
+        \draw[orange] (+0.3, -0.4) -- (5+0.3,-0.4);
+        \foreach \x in {0,1,2,3,4,5}
+           \draw[orange] (\x+0.3,-0.4) -- ([yshift=5pt]\x+0.3,-0.4);
+        \foreach \x in {0,0.1,...,5}
+           \draw[orange] (\x+0.3,-0.4) -- ([yshift=2pt]\x+0.3,-0.4);
+
+        % annotations
+        \node at (-2.5, 0) {\textbf{(b)}};
+        \foreach \x in {1,2,3,4,5}
+            \draw[thick,latex-,red] (\x,0.2) -- (\x+0.3,0.2) node[anchor=south]{$\mathbf{\delta}$};
+        \draw[thick,latex-] (+0.3,0.5) -- (0,0.5) node[anchor=south]{$\mathbf{u}$};
+        
+
+        %% Deformed at the center
+
+        % cable
+        \path[fill=lightgray] ([yshift=-2pt]0,-1.5) rectangle ([yshift=2pt]5,-1.5);
+        \path[left color=lightgray, right color=blue] ([yshift=-2pt]2+0.3-0.7,-1.5) rectangle ([yshift=2pt]2+0.3,-1.5);
+        \path[left color=red, right color=lightgray] ([yshift=-2pt]2+0.3,-1.5) rectangle ([yshift=2pt]2+0.3+0.7,-1.5);
+        \foreach \x in {1,2+0.3,3,4}
+           \draw ([yshift=2pt]\x,-1.5) -- ([yshift=-2pt]\x,-1.5);
+        \path[draw=black] ([yshift=-2pt]0,-1.5) rectangle ([yshift=2pt]5,-1.5);
+
+        % annotations
+        \node at (-2.5, -1.5) {\textbf{(c)}};
+        \draw[thick,latex-] (2+0.3,-1.5+0.2) -- (2,-1.5+0.2) node[anchor=south]{$\mathbf{u}$};
+        \draw[thick,latex-,green] (2+0.3,-1.5-0.2) -- (2,-1.5-0.2) node[anchor=north]{$\mathbf{\delta}$};
+        \node[draw,fill=black,text=white,anchor=east,minimum height=0.8cm,minimum width=1.3cm] at (0, -1.5) {DAS};  
+
+        
+        %% Deformed at the kink
+
+        % cable
+        \path[fill=lightgray] ([yshift=-2pt]0,-3) rectangle ([yshift=2pt]5+0.3,-3);
+        \path[fill=lightgray] ([yshift=-2pt]2,-3.3) rectangle ([yshift=2pt]5+0.3,-3.3);
+        \path[fill=blue] ([xshift=-4pt]5+0.3,-3) rectangle (5+0.3,-3.3);
+        \path[left color=lightgray, right color=blue] ([yshift=-2pt]5+0.3-0.7,-3) rectangle ([yshift=2pt]5+0.3,-3);
+        \path[left color=lightgray, right color=blue] ([yshift=-2pt]5+0.3-0.7,-3.3) rectangle ([yshift=2pt]5+0.3,-3.3);
+        \foreach \x in {1,2,3,4}
+            \draw ([yshift=2pt]\x,-3) -- ([yshift=-2pt]\x,-3);
+        \foreach \x in {3,4}
+            \draw ([yshift=2pt]\x,-3.3) -- ([yshift=-2pt]\x,-3.3);
+        \draw ([xshift=-4pt]5+0.3,-3.15) -- (5+0.3,-3.15);
+        \draw ([yshift=-2pt]0, -3) -- ([xshift=-4pt,yshift=-2pt]5+0.3,-3) -- ([xshift=-4pt,yshift=+2pt]5+0.3,-3.3) --
+        ([yshift=2pt]2,-3.3) -- ([yshift=-2pt]2,-3.3) -- ([yshift=-2pt]5+0.3,-3.3) -- ([yshift=2pt]5+0.3,-3) -- 
+        ([yshift=2pt]0,-3) -- ([yshift=-2pt]0,-3);
+
+        % annotations
+        \node at (-2.5, -3) {\textbf{(d)}};
+        \node[draw,fill=black,text=white,anchor=east,minimum height=0.8cm,minimum width=1.3cm] at (0, -3) {DAS};  
+        \foreach \x in {2,3}
+            \draw[thick,latex-,red] (\x,-3-0.5) -- (\x+0.6,-3-0.5) node[anchor=north]{$\mathbf{\delta}$};
+        \draw[thick,latex-] (5+0.3,-3+0.2) -- (5,-3+0.2) node[anchor=south]{$\mathbf{u}$};
+        \draw[thick,latex-,green] (5+0.3,-3-0.5) -- (5,-3-0.5) node[anchor=north]{$\mathbf{\delta}$};
+        
+
+    \end{tikzpicture}
+\end{figure}
+\end{document}
