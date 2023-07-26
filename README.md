@@ -4,7 +4,7 @@
 
 This repository contains the codes to reproduce the figures presented in the following article:
 
-> Trabattoni, A., Biagioli, F., Strumia, C., van den Ende, M., Scotto di Uccio. F., Festa, G., Rivet, D., Sladen, A., Ampuero J. P., Métaxian, J. P., Stutzmann, E. (2023). **Recovering displacement from distributed acoustic sensing data for seismic applications**. *Geophysical Journal International*.
+> Trabattoni, A., Biagioli, F., Strumia, C., van den Ende, M., Scotto di Uccio. F., Festa, G., Rivet, D., Sladen, A., Ampuero J. P., Métaxian, J. P., Stutzmann, E. (2023). **From strain to displacement: using deformation to enhance distributed acoustic applications**. *Geophysical Journal International*.
 
 To run the codes first install and activate the conda environment with:
 
