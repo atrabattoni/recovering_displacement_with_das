@@ -70,12 +70,12 @@ for dasfname in dasfnames:
     starttime = displacement["time"][0].values
     endtime = starttime + np.timedelta64(duration, "s")
     noise = displacement.sel(time=slice(starttime, endtime)).std("time")
-    peak = displacement.max("time")
+    peak = np.abs(displacement).max("time")
     snr = peak / noise
     mask = snr > snr_thresh
     if np.count_nonzero(mask) < min_ch:
         continue
-    displacement = displacement.sel(offset=mask)
+    peak[{"offset": ~mask}] = np.nan
 
     # hypocentral distance estimation
     st = obspy.read(os.path.join("data/irpinia/sac", event, "*.C0[4].*.sac"))
@@ -91,8 +91,8 @@ for dasfname in dasfnames:
     catalog.append(
         {
             "event": event,
-            "magnitude": np.median(magnitude),
-            "smad": 1.4826 * np.median(np.abs(magnitude - np.median(magnitude))),
+            "magnitude": np.nanmedian(magnitude),
+            "smad": 1.4826 * np.nanmedian(np.abs(magnitude - np.nanmedian(magnitude))),
         }
     )
     magnitudes[event] = magnitude
