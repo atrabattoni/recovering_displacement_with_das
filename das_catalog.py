@@ -54,6 +54,7 @@ for dasfname in dasfnames:
 
     # load, filter and convert to Wood-Anderson displacement in millimeters.
     strainrate = xr.open_dataarray(dasfname)
+    strainrate = 1e-9 * strainrate  # nƐ/s -> sƐ/s
     strainrate = strainrate.sel(offset=slice(limits["A"], limits["C"]))
     strainrate = xp.detrend(strainrate, type="linear", dim="time")
     strainrate = xp.taper(strainrate, ("tukey", taper), dim="time")
@@ -61,10 +62,11 @@ for dasfname in dasfnames:
     strain = xp.integrate(strainrate, dim="time")
     deformation = xp.integrate(strain, dim="offset")
     displacement = xp.sliding_mean_removal(deformation, wlen=250.0, dim="offset")
-    displacement = 1e-6 * displacement
+    displacement = 1e3 * displacement  #  nm - > mm
     b, a = sp.zpk2tf(paz["zeros"], paz["poles"], paz["gain"])
     b, a = sp.bilinear(b, a, fs=1.0 / xp.get_sample_spacing(displacement, "time"))
     displacement = displacement.copy(data=sp.lfilter(b, a, displacement.data, axis=0))
+    displacement = paz["sensitivity"] * displacement
 
     # SNR based event and channel selection
     starttime = displacement["time"][0].values
@@ -85,8 +87,7 @@ for dasfname in dasfnames:
     hyp = np.sqrt(tr.stats.sac["evdp"] ** 2 + distance_to_das**2)
 
     # local magnitude evaluation from Bobbio et al. (2009)
-    A = 2800 * peak
-    magnitude = np.log10(A) + 1.79 * np.log10(hyp) - 0.58
+    magnitude = np.log10(peak) + 1.79 * np.log10(hyp) - 0.58
 
     catalog.append(
         {
